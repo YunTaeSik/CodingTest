@@ -12,27 +12,81 @@ import java.lang.StringBuilder
  */
 class ExampleUnitTest {
     @Test
-    fun addition_isCorrect() {
+    fun test() {
         solution("aabbaccc")
-        // assertEquals(4, 2 + 2)
     }
 
     /**문자열 압축**/
     fun solution(s: String): Int {
-        var answer = 0
+        var answer = Int.MAX_VALUE
 
-        print(s)
-        //한개씩 자르기
-        for (count in s.indices) {
+        var length = s.length
 
-            //   println("count = $count")
-            println(count)
+        for (i in 1..length) {
+            var append = StringBuilder("")
 
-            var stringBuilder = StringBuilder(s)
-            stringBuilder.substring(0, count)
+            var value = ""
+            var preValue = ""
+            var count = 1
+            var text: String
 
+            for (index in s.indices) {
+                var startIndex = index * i
+                var endIndex = startIndex + i
+
+                if (startIndex <= length && endIndex <= length) {
+                    var substring = s.substring(startIndex, endIndex)
+
+                    if (value != "") {
+                        preValue = value
+                    }
+                    value = substring
+
+                    println("value = $value ")
+                    println("preValue = $preValue ")
+
+                    var addCountText = ""
+                    if (value == preValue) {
+                        println("같다")
+                        count++
+
+                        if (endIndex == length) {
+                            if (count > 1) {
+                                addCountText = count.toString()
+                            }
+                            text = addCountText + preValue
+                            append.append(text)
+                            count = 1
+                        }
+                        println("endIndex = $endIndex ")
+                    } else {
+                        println("다르다")
+                        if (count > 1) {
+                            addCountText = count.toString()
+                        }
+                        text = addCountText + preValue
+                        append.append(text)
+                        count = 1
+                    }
+
+                } else {
+
+                    println("value = $value ")
+                    println("preValue = $preValue ")
+                    append.append(value)
+                    println("끝났다")
+                    break
+
+                }
+            }
+            println(append.count())
+            if (append.count() in 1 until answer) {
+                answer = append.count()
+            }
         }
 
+
+        println(answer)
         return answer
     }
 }
