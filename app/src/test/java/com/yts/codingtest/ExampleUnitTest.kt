@@ -1,9 +1,8 @@
 package com.yts.codingtest
 
+import org.junit.Assert.assertArrayEquals
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
-import java.lang.StringBuilder
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -14,7 +13,10 @@ class ExampleUnitTest {
     @Test
     fun test() {
         // stringCompression("aabbaccc")
-        var answer = fullSearch(intArrayOf(1, 2, 3, 4, 5))
+        //      var answer = fullSearch(intArrayOf(1, 2, 3, 4, 5))
+
+        assertArrayEquals(intArrayOf(1), fullSearch(intArrayOf(1, 2, 3, 4, 5)))
+        assertEquals(6, workoutClothes(7, intArrayOf(2, 3, 4), intArrayOf(1, 2, 3, 6)))
     }
 
     /**모의고사 완전탐색**/
@@ -52,6 +54,51 @@ class ExampleUnitTest {
         }
         return answer.toIntArray()
     }
+
+    /**체육복 탐욕법**/
+    fun workoutClothes(n: Int, lost: IntArray, reserve: IntArray): Int {
+        var answer = 0
+
+        var lostList = lost.toMutableList()
+        var reserveList = reserve.toMutableList()
+
+
+        val reserveListIterable = reserveList.iterator()
+        /**
+         * 내꺼 여분
+         */
+        while (reserveListIterable.hasNext()) {
+            val value = reserveListIterable.next()
+            when {
+                lostList.contains(value) -> {
+                    lostList.remove(value)
+                    reserveListIterable.remove()
+                }
+
+            }
+        }
+        /**
+         * 남는옷들
+         */
+        for (value in reserveList) {
+            when {
+                lostList.contains(value - 1) -> {
+                    lostList.remove(value - 1)
+                }
+                lostList.contains(value + 1) -> {
+                    lostList.remove(value + 1)
+                }
+            }
+        }
+        answer = n - lostList.size
+        if (answer < 0) {
+            answer = 0
+        }
+
+        return answer
+    }
+
+
 
     /**문자열 압축**/
     fun stringCompression(s: String): Int {
