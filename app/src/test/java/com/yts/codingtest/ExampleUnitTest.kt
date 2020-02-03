@@ -17,6 +17,9 @@ class ExampleUnitTest {
 
         assertArrayEquals(intArrayOf(1), fullSearch(intArrayOf(1, 2, 3, 4, 5)))
         assertEquals(6, workoutClothes(7, intArrayOf(2, 3, 4), intArrayOf(1, 2, 3, 6)))
+        assertEquals("TUE", getDaysOftheWeek(5, 24))
+
+        getDaysOftheWeek(5, 24)
     }
 
     /**모의고사 완전탐색**/
@@ -98,7 +101,19 @@ class ExampleUnitTest {
         return answer
     }
 
+    /**2016년 요일구하기**/
+    fun getDaysOftheWeek(a: Int, b: Int): String {
+        val daysList = intArrayOf(31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+        val resultList = arrayListOf("FRI", "SAT", "SUN", "MON", "TUE", "WED", "THU")
 
+        var sum = 0
+        for (i in 0..a - 2) {
+            sum += daysList[i]
+        }
+        sum += (b - 1)
+
+        return resultList[sum % 7]
+    }
 
     /**문자열 압축**/
     fun stringCompression(s: String): Int {
