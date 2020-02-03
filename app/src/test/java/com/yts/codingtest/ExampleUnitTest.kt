@@ -18,8 +18,8 @@ class ExampleUnitTest {
         assertArrayEquals(intArrayOf(1), fullSearch(intArrayOf(1, 2, 3, 4, 5)))
         assertEquals(6, workoutClothes(7, intArrayOf(2, 3, 4), intArrayOf(1, 2, 3, 6)))
         assertEquals("TUE", getDaysOftheWeek(5, 24))
+        assertEquals("we", middleLetter("qwer"))
 
-        getDaysOftheWeek(5, 24)
     }
 
     /**모의고사 완전탐색**/
@@ -113,6 +113,15 @@ class ExampleUnitTest {
         sum += (b - 1)
 
         return resultList[sum % 7]
+    }
+
+    /**가운데 글자 구하기**/
+    fun middleLetter(s: String): String {
+        return if (s.length % 2 != 0) {
+            s.substring((s.length / 2), (s.length / 2) + 1)
+        } else {
+            s.substring((s.length / 2) - 1, (s.length / 2) + 1)
+        }
     }
 
     /**문자열 압축**/
