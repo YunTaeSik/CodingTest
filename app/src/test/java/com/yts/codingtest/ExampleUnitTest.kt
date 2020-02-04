@@ -19,6 +19,7 @@ class ExampleUnitTest {
         assertEquals(6, workoutClothes(7, intArrayOf(2, 3, 4), intArrayOf(1, 2, 3, 6)))
         assertEquals("TUE", getDaysOftheWeek(5, 24))
         assertEquals("we", middleLetter("qwer"))
+        assertEquals(3, twoSideInteger(3, 3))
 
     }
 
@@ -122,6 +123,22 @@ class ExampleUnitTest {
         } else {
             s.substring((s.length / 2) - 1, (s.length / 2) + 1)
         }
+    }
+
+    /**두정수의 사이의 합**/
+    fun twoSideInteger(a: Int, b: Int): Long {
+        var answer: Long = 0
+        var start = a
+        var end = b
+
+        if (a > b) {
+            start = b
+            end = a
+        }
+        for (value in start..end) {
+            answer += value
+        }
+        return answer
     }
 
     /**문자열 압축**/
