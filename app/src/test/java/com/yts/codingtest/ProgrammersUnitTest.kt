@@ -73,11 +73,10 @@ class ProgrammersUnitTest {
      */
     //K번째수
     fun kValue(array: IntArray, commands: Array<IntArray>): IntArray {
-        return commands.map {
-            log(it)
-            //   array.toList().subList(it[0], Math.min(it[1], it.size))[0]
-            array.toList().subList(0, 7)[it[2]]
+      return  commands.map {
+            array.toList().subList(it[0] - 1, it[1]).sorted()[it[2] - 1]
         }.toList().toIntArray()
+
 
     }
 }
