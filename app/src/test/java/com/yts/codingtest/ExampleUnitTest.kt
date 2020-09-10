@@ -1,5 +1,7 @@
 package com.yts.codingtest
 
+import android.util.Log
+import com.google.gson.Gson
 import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -14,12 +16,23 @@ class ExampleUnitTest {
     fun test() {
         // stringCompression("aabbaccc")
         //      var answer = fullSearch(intArrayOf(1, 2, 3, 4, 5))
-
+/*
         assertArrayEquals(intArrayOf(1), fullSearch(intArrayOf(1, 2, 3, 4, 5)))
         assertEquals(6, workoutClothes(7, intArrayOf(2, 3, 4), intArrayOf(1, 2, 3, 6)))
         assertEquals("TUE", getDaysOftheWeek(5, 24))
         assertEquals("we", middleLetter("qwer"))
-        assertEquals(3, twoSideInteger(3, 3))
+        assertEquals(3, twoSideInteger(3, 3))*/
+
+        assertEquals(
+            5,
+            camouflage(
+                arrayOf(
+                    arrayOf("yellow_hat", "headgear"),
+                    arrayOf("blue_sunglasses", "eyewear"),
+                    arrayOf("green_turban", "headgear")
+                )
+            )
+        )
 
     }
 
@@ -213,5 +226,15 @@ class ExampleUnitTest {
 
         println(answer)
         return answer
+    }
+
+    /**
+     * 위장
+     */
+    fun camouflage(clothes: Array<Array<String>>): Int {
+        return clothes.groupBy { it[1] }.values.
+        fold(1) { acc, v ->
+            acc * (v.size + 1)
+        } - 1
     }
 }
