@@ -2,6 +2,7 @@ package com.yts.codingtest
 
 import com.google.gson.Gson
 import org.junit.Assert.assertArrayEquals
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 /**
@@ -9,31 +10,103 @@ import org.junit.Test
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-class ProgrammersUnitTest {
+class CoupangUnitTest {
     @Test
     fun test() {
-        /*     assertArrayEquals(
-                 intArrayOf(4, 1, 3, 0),
-                 bestAlbum(
-                     arrayOf("classic", "pop", "classic", "classic", "pop"),
-                     intArrayOf(500, 600, 150, 800, 2500)
-                 )
-             )
-             assertArrayEquals(
-                 intArrayOf(5, 6, 3),
-                 kValue(
-                     intArrayOf(1, 5, 2, 6, 3, 7, 4),
-                     arrayOf(intArrayOf(2, 5, 3), intArrayOf(4, 4, 1), intArrayOf(1, 7, 3))
-                 )
-             )
+        assertArrayEquals(longArrayOf(1, 1, 3, 1), solution1(arrayOf("one", "one", "two", "one")))
 
+        assertEquals("_____h", solution2(6, "hi bye", 1))
 
-             assertEquals(5, targetNumber(intArrayOf(1, 1, 1, 1, 1), 3))*/
-        assertArrayEquals(longArrayOf(1, 1, 3, 1), solution(arrayOf("one", "one", "two", "one")))
+        assertEquals(4, solution(intArrayOf(10, 10, 10, 10)))
+
     }
 
     fun log(value: Any) {
         println(Gson().toJson(value))
+    }
+
+    fun solution1(words: Array<String>): LongArray {
+        val map = HashMap<String, Int>()
+        val answer: LongArray = LongArray(words.size)
+
+        words.forEachIndexed { i, word ->
+            if (!map.contains(word)) {
+                map[word] = i + 1
+            }
+            answer[i] = map[word]?.toLong() ?: 0
+        }
+
+        return answer
+    }
+
+    fun solution2(n: Int, text: String, second: Int): String {
+        var answer = ""
+        val charArray: MutableList<Char> = text.toCharArray().toMutableList()
+
+        for (i in 0 until n) {
+            charArray.add(0, '_')
+        }
+
+        charArray.forEachIndexed { index, c ->
+            answer += charArray[((index + second) % charArray.size)]
+        }
+
+        return answer.slice(0 until n).replace(" ", "_")
+    }
+
+    @OptIn(ExperimentalStdlibApi::class)
+    fun solution(ages: IntArray): Int {
+        var answer = 1
+        val candleList = mutableListOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
+        var ageString = ""
+
+        ages.forEach {
+            ageString += it.toString()
+        }
+
+        ageString.forEach {
+            if (candleList.contains(it)) {
+                candleList.remove(it)
+            } else if (it == '6') {
+                if (candleList.contains('9')) {
+                    candleList.remove('9')
+                } else {
+                    addList(candleList, it)
+                    answer++
+                }
+            } else if (it == '9') {
+                if (candleList.contains('6')) {
+                    candleList.remove('6')
+                } else {
+                    addList(candleList, it)
+                    answer++
+                }
+            } else {
+                addList(candleList, it)
+                answer++
+            }
+        }
+
+        return answer
+    }
+
+
+    fun addList(candleList: MutableList<Char>, removeChar: Char) {
+        candleList.addAll(
+            mutableListOf(
+                '0',
+                '1',
+                '2',
+                '3',
+                '4',
+                '5',
+                '6',
+                '7',
+                '8',
+                '9'
+            )
+        )
+        candleList.remove(removeChar)
     }
 
 
@@ -55,27 +128,6 @@ class ProgrammersUnitTest {
             .map { it.second.sortedByDescending { plays[it] }.take(2) }
             .flatten()
             .toIntArray()
-    }
-
-    fun solution(words: Array<String>): LongArray {
-        val map = HashMap<String, Int>()
-        val answer: LongArray = LongArray(words.size)
-
-        words.forEachIndexed { i, word ->
-            if (!map.contains(word)) {
-                map[word] = i + 1
-            }
-            answer[i] = map[word]?.toLong() ?: 0
-        }
-
-        words.mapIndexed { i, word ->
-            if (!map.contains(word)) {
-                map[word] = i + 1
-            }
-            answer[i] = map[word]?.toLong() ?: 0
-        }
-
-        return answer
     }
 
 
